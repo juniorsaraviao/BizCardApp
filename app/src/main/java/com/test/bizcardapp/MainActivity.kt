@@ -1,6 +1,7 @@
 package com.test.bizcardapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -18,6 +19,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.test.bizcardapp.ui.theme.BizCardAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -52,8 +54,42 @@ fun CreateBizCard() {
                     horizontalAlignment = Alignment.CenterHorizontally ) {
                 CreateImageProfile()
                 Divider()
+                CreateInfo()
+                Button( onClick = {
+                    Log.d("Clicked", "CreateBizCard: Clicked!")
+                },
+                        modifier = Modifier.padding(10.dp)) {
+                    Text( text = "Portfolio",
+                          style = MaterialTheme.typography.button )
+                }
+
             }
         }
+    }
+}
+
+@Composable
+private fun CreateInfo() {
+    Column(
+        modifier = Modifier.padding(5.dp),
+        verticalArrangement = Arrangement.Top
+    ) {
+        Text(
+            text = "Junior Saravia",
+            color = MaterialTheme.colors.primaryVariant,
+            style = MaterialTheme.typography.h4
+        )
+
+        Text(
+            text = "Android Compose programmer",
+            modifier = Modifier.padding(3.dp)
+        )
+
+        Text(
+            text = "@composeSample",
+            modifier = Modifier.padding(3.dp),
+            style = MaterialTheme.typography.subtitle1
+        )
     }
 }
 
