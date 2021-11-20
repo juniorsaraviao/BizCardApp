@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "BizCardApp"
 include ':app'
+include ':Kotlin'
