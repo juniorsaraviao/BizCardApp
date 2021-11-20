@@ -28,6 +28,10 @@ fun main() {
     println("Cat age is ${calculateCatAge(5)}")
     println(sum(10, 12))
     printName("Android - Kotlin")
+    enhancedMessage("Hello, Peter"){
+        println("message: $it")
+        sum(20, 26)
+    }
 }
 
 fun calculate(first: Int, last: Int, multipleOf: Int, message: String = "is multiple of") {
@@ -52,3 +56,7 @@ val sum: (Int, Int) -> Int = { a, b -> a + b  }
 
 // Lambdas with void
 val printName: (String) -> Unit = { println(it) }
+
+fun enhancedMessage( message: String, funAsParameter: (String) -> Int ) {
+    println("$message ${funAsParameter("Hey")}")
+}
