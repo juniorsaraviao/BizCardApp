@@ -20,7 +20,6 @@ fun main(){
     // Character
     val character = Character("Character")
     character.onClick("This is a character")
-
     // ToAppend
     println("Hello".append(", Peter"))
     println("a".removeFirstLastChar())
@@ -50,7 +49,7 @@ open class Car(var driver: String, var color: String, var model: String) {
     }
 }
 
-class Character(val name: String) : ClickEvent{
+data class Character(private val name: String) : ClickEvent{
     override fun onClick(message: String) {
         println("Clicked by $name: $message")
     }
