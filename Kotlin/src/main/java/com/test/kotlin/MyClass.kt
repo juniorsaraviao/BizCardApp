@@ -32,6 +32,15 @@ fun main() {
         println("message: $it")
         sum(20, 26)
     }
+
+    // List
+    val listOfName = listOf("James", "Paul", "Rafael", "Gina").toMutableList()
+    listOfName.add("Luis")
+    listOfName.forEach { println(it) }
+
+    // Map key - value
+    val map = mapOf("Up" to 1, "Down" to 2, "Left" to 3, "Right" to 4)
+    println(map["Left"])
 }
 
 fun calculate(first: Int, last: Int, multipleOf: Int, message: String = "is multiple of") {
