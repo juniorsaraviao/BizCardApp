@@ -20,6 +20,10 @@ fun main(){
     // Character
     val character = Character("Character")
     character.onClick("This is a character")
+
+    // ToAppend
+    println("Hello".append(", Peter"))
+    println("a".removeFirstLastChar())
 }
 
 // make the class Car open to inherit from it
@@ -62,4 +66,13 @@ class Button(val label: String) : ClickEvent {
 // Interface
 interface ClickEvent {
     fun onClick(message: String)
+}
+
+// Extension
+fun String.append(toAppend: String) : String {
+    return this + toAppend
+}
+
+fun String.removeFirstLastChar() : String {
+    return if(this.length == 1) "this '$this' has only one char" else this.substring(1, this.length - 1)
 }
