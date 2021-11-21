@@ -12,6 +12,14 @@ fun main(){
 
     val truck = Truck("Truck driver", "Magenta", "F16")
     truck.drive()
+
+    // Button
+    val button = Button("Button")
+    button.onClick("This is a button")
+
+    // Character
+    val character = Character("Character")
+    character.onClick("This is a character")
 }
 
 // make the class Car open to inherit from it
@@ -36,4 +44,22 @@ open class Car(var driver: String, var color: String, var model: String) {
     open fun drive(){
         println("Init run...")
     }
+}
+
+class Character(val name: String) : ClickEvent{
+    override fun onClick(message: String) {
+        println("Clicked by $name: $message")
+    }
+
+}
+
+class Button(val label: String) : ClickEvent {
+    override fun onClick(message: String) {
+        println("Clicked by $label: $message")
+    }
+}
+
+// Interface
+interface ClickEvent {
+    fun onClick(message: String)
 }
