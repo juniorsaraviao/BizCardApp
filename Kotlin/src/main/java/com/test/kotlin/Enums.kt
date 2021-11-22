@@ -1,6 +1,8 @@
 package com.test.kotlin
 
+import java.io.IOException
 import java.lang.Exception
+import java.lang.NullPointerException
 
 fun main() {
 //    val input = Result.ERROR
@@ -11,6 +13,11 @@ fun main() {
     Repository.finishedFetch()
     getResult(Repository.getCurrentState())
     Repository.error()
+    getResult(Repository.getCurrentState())
+
+    Repository.anotherCustomFailure()
+    getResult(Repository.getCurrentState())
+    Repository.customFailure()
     getResult(Repository.getCurrentState())
 }
 
@@ -36,6 +43,13 @@ object Repository {
         return loadState
     }
 
+    fun anotherCustomFailure() {
+        loadState = Failure.AnotherCustomFailure(NullPointerException("something went wrong"))
+    }
+
+    fun customFailure() {
+        loadState = Failure.CustomFailure(IOException("Custom Failure"))
+    }
 }
 
 fun getResult(result: Result) {
@@ -44,7 +58,8 @@ fun getResult(result: Result) {
         is Success -> println(result.dataFetched ?: "Ensure you start the fetch function first")
         is Loading -> println("Loading...")
         is NotLoading -> println("Idle")
-        else -> println("N/A")
+        is Failure.AnotherCustomFailure -> println(result.anotherCustomFailure.toString())
+        is Failure.CustomFailure -> println(result.customFailure.toString())
     }
 }
 
@@ -56,9 +71,16 @@ fun getResult(result: Result) {
 //    LOADING
 //}
 
-abstract class Result
+// all the states created are exhaustive - not need 'else'
+sealed class Result
 
 data class Success(val dataFetched: String?) : Result()
 data class Error(val exception: Exception) : Result()
 object NotLoading: Result()
 object Loading: Result()
+
+
+sealed class Failure: Result() {
+    data class CustomFailure( val customFailure: IOException ): Failure()
+    data class AnotherCustomFailure( val anotherCustomFailure: NullPointerException ) : Failure()
+}
