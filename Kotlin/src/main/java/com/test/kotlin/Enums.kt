@@ -1,5 +1,7 @@
 package com.test.kotlin
 
+import java.lang.Exception
+
 fun main() {
 //    val input = Result.ERROR
 //    getResult(input)
@@ -13,21 +15,21 @@ fun main() {
 }
 
 object Repository {
-    private var loadState: Result = Result.IDLE
+    private var loadState: Result = NotLoading
     private var dataFetched: String? = null
 
     fun startFetch() {
-        loadState = Result.LOADING
+        loadState = Loading
         dataFetched = "data"
     }
 
     fun finishedFetch() {
-        loadState = Result.SUCCESS
+        loadState = Success(dataFetched)
         dataFetched = null
     }
 
     fun error() {
-        loadState = Result.ERROR
+        loadState = Error(exception = Exception("Exception"))
     }
 
     fun getCurrentState() : Result {
@@ -38,18 +40,25 @@ object Repository {
 
 fun getResult(result: Result) {
     return when( result ){
-        Result.SUCCESS -> println("Success!!")
-        Result.FAILURE -> println("Failure!!")
-        Result.ERROR -> println("Error!!")
-        Result.IDLE -> println("Idle!!")
-        Result.LOADING -> println("Loading!!")
+        is Error -> println(result.exception.toString())
+        is Success -> println(result.dataFetched ?: "Ensure you start the fetch function first")
+        is Loading -> println("Loading...")
+        is NotLoading -> println("Idle")
+        else -> println("N/A")
     }
 }
 
-enum class Result {
-    SUCCESS,
-    FAILURE,
-    ERROR,
-    IDLE,
-    LOADING
-}
+//enum class Result {
+//    SUCCESS,
+//    FAILURE,
+//    ERROR,
+//    IDLE,
+//    LOADING
+//}
+
+abstract class Result
+
+data class Success(val dataFetched: String?) : Result()
+data class Error(val exception: Exception) : Result()
+object NotLoading: Result()
+object Loading: Result()
